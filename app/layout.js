@@ -2,6 +2,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import { ClerkProvider } from '@clerk/nextjs'
 import { ModalProvider } from '@/Provider/modal-provider' // Fix the import statement here
+import ToastProvider from '@/Provider/toast-provider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -16,6 +17,7 @@ export default function RootLayout({ children }) {
       <html lang="en">
         <body className={inter.className}>
           <ModalProvider />
+          <ToastProvider/>
           {children}
         </body>
       </html>

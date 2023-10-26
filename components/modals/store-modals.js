@@ -1,6 +1,7 @@
 'use client'
 import { useStoreModal } from "@/hooks/use-store-modal"
 import * as z from "zod"
+import axios from "axios";
 import { zodResolver } from "@hookform/resolvers/zod"
 import Modal from "@/components/ui/modal"
 import { useRouter } from "next/navigation";
@@ -9,6 +10,7 @@ import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import toast from "react-hot-toast"
 export const StoreModal = () =>{
     const storeModal = useStoreModal()
     const router = useRouter();
@@ -25,16 +27,19 @@ export const StoreModal = () =>{
   });
 
   const onSubmit = async (values) => {
-    console.log(values);
-    // try {
-    //   setLoading(true);
-    //   const response = await axios.post('/api/stores', values);
-    //   window.location.assign(`/${response.data.id}`);
-    // } catch (error) {
-    //   toast.error('Something went wrong');
-    // } finally {
-    //   setLoading(false);
-    // }
+   
+    try {
+      setLoading(true);
+      const response = await axios.post('/api/stores', values);
+      toast.success('create ok')
+      console.log(response);
+      // window.location.assign(`/${response.data.id}`);
+    } catch (error) {
+      console.log(error);
+      toast.error('Something went wrong');
+    } finally {
+      setLoading(false);
+    }
   };
 
     

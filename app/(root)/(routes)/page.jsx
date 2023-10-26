@@ -11,11 +11,5 @@ export default function Home() {
       onOpen();
     }
   },[isOpen,onOpen])
-  return (
-    <>
-     <div >
-      Children
-     </div>
-    </>
-  )
+  return null
 }
