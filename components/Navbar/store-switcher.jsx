@@ -20,8 +20,8 @@ const StoreSwitcher = ({ className, items }) => {
       value: item.id
     }));
     // console.log('from store-switches',formattedItems, items);
-    const currentStore = formattedItems?.find((item) => item.id === params.storeId);
-    const onStoreSelected = (store) => {
+    const currentStore = formattedItems?.find((item) => item.value === params.storeId);
+        const onStoreSelected = (store) => {
       // console.log('im ID',store);
         setOpen(false)
         router.push(`/${store.value}`)
@@ -38,7 +38,7 @@ const StoreSwitcher = ({ className, items }) => {
                         aria-label="select a store"
                         className={cn('w-[200px] justify-between', className)}
                     >
-                        <Store className='mr-2 h-4 w-4' /> cc
+                        <Store className='mr-2 h-4 w-4' />  {currentStore?.label}
                         <ChevronsUpDown className='ml-auto w-4 h-4 shrink-0 opacity-50' />
                     </Button>
                 </div>

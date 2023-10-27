@@ -15,8 +15,7 @@ const Navbar = async() => {
             userId,
         }
     })
-    console.log('total stores', stores);
-
+  
     return (
         <div className="border-b">
             <div className="flex h-16 items-center px-4">

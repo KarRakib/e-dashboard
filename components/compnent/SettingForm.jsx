@@ -9,9 +9,15 @@ import { Trash } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import toast from "react-hot-toast";
+import axios from "axios";
+import { useParams, useRouter } from "next/navigation";
+import AlertModal from "../modals/alert-modal";
 
 
 const SettingForm = ({ initialData }) => {
+  const params = useParams();
+  const route = useRouter()
     // console.log('init', initialData);
     const [open, setOpen] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -22,11 +28,26 @@ const SettingForm = ({ initialData }) => {
         resolver: zodResolver(formSchema),
         defaultValues: initialData
       });
-const onSubmit = async (data)=>{
-    console.log(data);
-}
+      const onSubmit = async (data) => {
+        console.log(data);
+        try {
+            await axios.patch(`/api/stores/${params.storeId}`, data);
+            route.refresh();
+            toast.success('Store updated');
+        } catch (error) {
+            toast.error(error.message);
+        } finally {
+            setLoading(false);
+        }
+    };
     return (
         <>
+        <AlertModal
+        isOpen={open}
+        onClose={()=> setLoading(false)}
+        onConfirm={()=>{}}
+        loading={loading}
+        />
         <div className='flex items-center justify-between'>
             <Heading
                 title='Settings'
@@ -35,7 +56,7 @@ const onSubmit = async (data)=>{
             <Button
                 variant="destructive"
                 size='icon'
-                onClick={() => {}}
+                onClick={() => setOpen(true)}
             >
                 <Trash className='w-4 h-4' />
             </Button>
