@@ -1,9 +1,11 @@
+import Navbar from '@/components/Navbar/Navbar';
 import prisma from '@/lib/prismabd';
 import { auth } from '@clerk/nextjs';
 import { redirect } from 'next/navigation';
 import React from 'react';
 
-const DashboardLayout = async({children, params}) => {
+const DashboardLayout = async({ children,params}) => {
+    console.log('parms',params);
     const {userId} = auth()
     if(!userId){
         redirect('sign-in')
@@ -17,9 +19,10 @@ const DashboardLayout = async({children, params}) => {
     if(!store){
         redirect('/')
     }
+    console.log('layout store', store);
     return (
         <div>
-            nav 
+            <Navbar/>
             {children}
         </div>
     );
