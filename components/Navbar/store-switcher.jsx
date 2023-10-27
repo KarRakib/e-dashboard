@@ -14,14 +14,17 @@ const StoreSwitcher = ({ className, items }) => {
     const storeModal = useStoreModal()
     const params = useParams();
     const router = useRouter()
-    console.log('params switch',params);
-    const formattedItems = items?.map(i => i.id === params.storeId);
-    console.log('from store-switches',formattedItems, items);
+    // console.log('params switch',params.storeId);
+    const formattedItems = items.map((item) => ({
+      label: item.name,
+      value: item.id
+    }));
+    // console.log('from store-switches',formattedItems, items);
     const currentStore = formattedItems?.find((item) => item.id === params.storeId);
     const onStoreSelected = (store) => {
-      console.log('im ID',store.id);
+      // console.log('im ID',store);
         setOpen(false)
-        router.push(`/${store.id}`)
+        router.push(`/${store.value}`)
     }
     return (
         <Popover open={open} onOpenChange={setOpen}>
@@ -48,7 +51,7 @@ const StoreSwitcher = ({ className, items }) => {
             <CommandGroup heading="Stores">
               {formattedItems?.map((store) => (
                 <CommandItem
-                  key={store.id}
+                  key={store.value}
                   onSelect={() => onStoreSelected(store)}
                   className="text-sm"
                 >
