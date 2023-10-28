@@ -13,6 +13,7 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
 import AlertModal from "../modals/alert-modal";
+import ApiAlert from "@/components/ui/apiAlert";
 
 
 const SettingForm = ({ initialData }) => {
@@ -40,12 +41,29 @@ const SettingForm = ({ initialData }) => {
             setLoading(false);
         }
     };
+    const onDelete = async () =>{
+      try {
+        setLoading(true)
+        await  axios.delete(`/api/stores/${params.storeId}`)
+        route.refresh()
+        route.push('/')
+        toast.success('delete success')
+        
+      } catch (error) {
+        console.log(error);
+        toast.error(error.message)
+        
+      }finally{
+        setOpen(false)
+        setLoading(false)
+      }
+    }
     return (
         <>
         <AlertModal
         isOpen={open}
-        onClose={()=> setLoading(false)}
-        onConfirm={()=>{}}
+        onClose={()=> setOpen(false)}
+        onConfirm={onDelete}
         loading={loading}
         />
         <div className='flex items-center justify-between'>
@@ -85,8 +103,11 @@ const SettingForm = ({ initialData }) => {
               
               </form>
             </Form>
+            <Separator/>
+            <ApiAlert title='NEXT_PUBLIC_API_URL'description={`${origin}/api/${params.storeId}`} variant='public' />
         </>
     );
 }
 
 export default SettingForm;
+ 

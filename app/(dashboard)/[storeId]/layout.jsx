@@ -1,14 +1,15 @@
 import Navbar from '@/components/Navbar/Navbar';
 import prisma from '@/lib/prismabd';
 import { auth } from '@clerk/nextjs';
-import { redirect } from 'next/navigation';
+import { redirect, useParams } from 'next/navigation';
 import React from 'react';
 
 const DashboardLayout = async({ children,params}) => {
+   
     console.log('parms',params);
     const {userId} = auth()
     if(!userId){
-        redirect('sign-in')
+        redirect('/sign-in')
     }
     const store = await prisma.store.findFirst({
         where:{

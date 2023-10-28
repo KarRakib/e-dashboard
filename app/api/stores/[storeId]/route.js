@@ -46,10 +46,10 @@ export const DELETE = async(req,{params})=>{
         if(!params.storeId){
             return new NextResponse.json({message:'Store is Required', status:400})
         }
-        const store = await prisma.store.deleteMany({
+        const store = await prisma.store.delete({
             where:{
                 id: params.storeId,
-                userId
+                
             }
         });
         return new NextResponse.json({store, status:201})
