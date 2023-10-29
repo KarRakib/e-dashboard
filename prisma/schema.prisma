@@ -26,7 +26,7 @@ model Store {
 
 model Billboard {
   id         String     @id @default(auto()) @map("_id") @db.ObjectId
-  storeId    String     @db.ObjectId
+  storeId    String
   store      Store      @relation("StoreToBillboard", fields: [storeId], references: [id])
   label      String
   imageUrl   String
@@ -39,7 +39,7 @@ model Billboard {
 
 model Category {
   id          String    @id @default(auto()) @map("_id") @db.ObjectId
-  storeId     String    @db.ObjectId // Foreign Key to Store
+  storeId     String
   store       Store     @relation("StoreToCategory", fields: [storeId], references: [id])
   billboardId String    @db.ObjectId // Foreign Key to Billboard
   billboard   Billboard @relation(fields: [billboardId], references: [id])
@@ -54,7 +54,7 @@ model Category {
 
 model Product {
   id         String      @id @default(auto()) @map("_id") @db.ObjectId
-  storeId    String      @db.ObjectId // Foreign Key to Store
+  storeId    String
   store      Store       @relation("StoreToProduct", fields: [storeId], references: [id])
   categoryId String      @db.ObjectId // Foreign Key to Category
   category   Category    @relation("CategoryToProduct", fields: [categoryId], references: [id])
@@ -79,7 +79,7 @@ model Product {
 
 model Order {
   id         String      @id @default(auto()) @map("_id") @db.ObjectId
-  storeId    String      @db.ObjectId
+  storeId    String
   store      Store       @relation("StoreToOrder", fields: [storeId], references: [id])
   orderItems OrderItem[] // Relation to OrderItem model
   isPaid     Boolean     @default(false)
@@ -94,7 +94,7 @@ model Order {
 // Intermediary for a many-to-many relationship
 model OrderItem {
   id        String  @id @default(auto()) @map("_id") @db.ObjectId
-  orderId   String  @db.ObjectId
+  orderId   String  
   order     Order   @relation(fields: [orderId], references: [id])
   productId String  @db.ObjectId
   product   Product @relation(fields: [productId], references: [id])
@@ -105,7 +105,7 @@ model OrderItem {
 
 model Size {
   id        String    @id @default(auto()) @map("_id") @db.ObjectId
-  storeId   String    @db.ObjectId
+  storeId   String   
   store     Store     @relation("StoreToSize", fields: [storeId], references: [id])
   name      String
   value     String
@@ -118,7 +118,7 @@ model Size {
 
 model Color {
   id        String    @id @default(auto()) @map("_id") @db.ObjectId
-  storeId   String    @db.ObjectId
+  storeId   String   
   store     Store     @relation("StoreToColor", fields: [storeId], references: [id])
   name      String
   value     String
@@ -131,7 +131,7 @@ model Color {
 
 model Image {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  productId String   @db.ObjectId
+  productId String   
   product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   url       String // URL of the image
   createdAt DateTime @default(now())

@@ -1,4 +1,4 @@
-import SettingForm from '@/components/compnent/SettingForm';
+import BillboardForm from '@/components/compnent/BillboardForm';
 import prisma from '@/lib/prismabd';
 import { auth } from '@clerk/nextjs';
 import { redirect } from 'next/navigation';
@@ -21,7 +21,7 @@ const Page = async({params}) => {
     return (
         <div className='flex-col'>
             <div className='flex-1 space-y-4 p-8 pt-6'>
-            <SettingForm initialData={store} />
+            <BillboardForm initialData={store} />
             </div>
         </div>
     );
